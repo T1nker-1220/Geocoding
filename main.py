@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')  # Set the static folder
 
-# OpenCage API key
+# Your OpenCage API key
 api_key = "498177dbd9e64c509f3c883626ee4629"
 
 @app.route('/', methods=['GET', 'POST'])
