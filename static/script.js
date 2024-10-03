@@ -1,64 +1,56 @@
+// Get references to HTML elements for interaction
 const descriptionContainer = document.getElementById('description');
 const geocodeForm = document.getElementById('geocode-form');
 const resultDiv = document.getElementById('result');
-const mapContainer = document.getElementById('map-container');
-const map = L.map('map').setView([12.8797, 121.7740], 6); // Initial center and zoom
 
-// Load tile layer from OpenStreetMap
+// Initialize Leaflet map centered on the Philippines with zoom level 6
+const map = L.map('map').setView([12.8797, 121.7740], 6);
+
+// Add OpenStreetMap tiles to the map
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-geocodeForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Prevent the form from submitting normally
-    const city = document.getElementById('city').value;
+// Initialize a marker variable to store the marker and ensure it can be removed later
+let marker;
 
+// Event listener for form submission
+geocodeForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent the form from submitting the usual way
+    const city = document.getElementById('city').value; // Get city input value
+
+    // Send the city to the server using fetch
     fetch('/', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded' // Send the form data as URL encoded
         },
-        body: `city=${city}`
+        body: `city=${city}` // Send the city name in the body of the POST request
     })
     .then(response => {
         if (response.ok) {
-            return response.json();
+            return response.json(); // Parse the response as JSON if the request was successful
         } else {
-            throw new Error('Network response was not ok');
-        }
-    })
-    .then(data => {
-        resultDiv.innerHTML = ''; // Clear previous results
-        if (data.error) {
-            resultDiv.innerHTML = `<p>${data.error}</p>`;
-        } else {
-            // Display results in a structured format
-            resultDiv.innerHTML = `
-                <div class="result-card">
-                    <h2>Geocoding Result</h2>
-                    <p><strong>City:</strong> ${data.formatted}</p>
-                    <p><strong>Latitude:</strong> ${data.latitude}</p>
-                    <p><strong>Longitude:</strong> ${data.longitude}</p>
-                    <p><strong>Confidence:</strong> ${data.confidence}</p>
-                </div>
-            `;
-
-            // Animate the result div to fade in
-            resultDiv.classList.add('visible'); 
-
-            // Animate the map to the new location using flyTo
-            map.flyTo([data.latitude, data.longitude], 12, {
-                duration: 2 // Duration of the animation in seconds
-            });
-
-            // Add a marker to the map at the city location
-            L.marker([data.latitude, data.longitude]).addTo(map)
-                .bindPopup(`City: ${data.formatted}`) // Bind a popup to the marker
-                .openPopup(); // Open the popup immediately
-        }
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-        resultDiv.innerHTML = `<p>Error: Unable to process request.</p>`;
-    });
-})
+            throw new Error('Network response was not ok'); } }) .then(data => { resultDiv.innerHTML = ''; // Clear previous results
+                if (data.error) {
+                    resultDiv.innerHTML = `<p>${data.error}</p>`; // Display error message if something went wrong
+                } else {
+                    resultDiv.innerHTML = `
+                        <p>Formatted Address: ${data.formatted}</p>
+                        <p>Latitude: ${data.latitude}</p>
+                        <p>Longitude: ${data.longitude}</p>
+                        <p>Components: ${JSON.stringify(data.components)}</p>
+                        <p>Confidence: ${data.confidence}</p>
+                    `;
+            
+                    // Update the map's center to the new location
+                    map.setView([data.latitude, data.longitude], 12);
+            
+                    // Remove existing marker if present
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+            
+                    // Add
+                }
+            })})            

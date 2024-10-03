@@ -4,32 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reverse Geocoding</title>
+
+    <!-- Link to external CSS file for design -->
     <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}" /> 
+    <!-- Link to Leaflet CSS file for the map design -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Reverse Geocode Philippine Cities</h1>
+    <h1>Reverse Geocode Philippine Cities</h1>
 
-        <form id="geocode-form" method="POST">
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" placeholder="Enter Philippine City" required>
-            <button type="submit">Search</button>
-        </form>
+    <!-- Geocode Form to accept user input -->
+    <form id="geocode-form" method="POST">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" placeholder="Enter Philippine City" required>
+        <button type="submit">Search</button> <!-- Submit button to search the city -->
+    </form>
 
-        <div id="result" class="hidden">
-            <div id="description" class="hidden">
-                <div class="description-content">
-                    <strong>City Name:</strong> <span id="city-name"></span>
-                </div>
+    <!-- Section to display the result -->
+    <div id="result">
+        <!-- Description container, initially hidden, to display city details -->
+        <div id="description" class="hidden">
+            <div class="description-content">
+                <strong>City Name:</strong> <span id="city-name"></span> <!-- Placeholder for city name -->
+                <br>
+                <strong>Description:</strong> <span id="city-description"></span> <!-- Placeholder for description -->
             </div>
-            <div id="map-container">
-                <div id="map"></div>
-            </div>
+        </div>
+        <!-- Map container to display the Leaflet map -->
+        <div id="map-container">
+            <div id="map"></div> <!-- Div where the map will be rendered -->
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='leaflet.js') }}"></script> 
-    <script src="{{ url_for('static', filename='script.js') }}"></script> 
+    <!-- Link to external JS files -->
+    <script src="{{ url_for('static', filename='leaflet.js') }}"></script> <!-- Leaflet library for map -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script> <!-- Custom script to handle user interaction -->
 </body>
 </html>
