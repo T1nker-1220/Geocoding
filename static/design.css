@@ -1,87 +1,94 @@
-/* General body styling */
+/* Body styling with background image */
 body {
-    background-image: url('pexels-solyartphotos-14825208.jpg'); /* Background image of the page */
-    background-size: cover; /* Ensure the background image covers the entire screen */
-    background-position: center;
-    font-family: 'Roboto', sans-serif; /* Font style */
+    background-image: url('https://example.com/image.jpg'); /* Change URL to valid one */
+    background-size: cover; /* Cover the entire page with background */
+    background-position: center; /* Center the background */
+    font-family: sans-serif;
     margin: 0;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally */
+    align-items: center;
 }
 
+/* Title styling */
 h1 {
-    text-align: center; /* Center the heading */
+    font-size: 2.5em;
+    text-align: center;
     margin-bottom: 20px;
-    color: #fff;
+    color: #333;
+    animation: fadeInTitle 1.5s ease; /* Title animation */
 }
 
-/* Form styling */
-#geocode-form label {
-    display: block;
-    margin-bottom: 5px;
-    color: #fff; /* White text for labels */
+@keyframes fadeInTitle {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-#geocode-form input {
-    width: 100%;
+/* Input form styling */
+#geocode-form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 500px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: formSlide 1s ease; /* Slide in animation */
+}
+
+@keyframes formSlide {
+    from { opacity: 0; transform: translateX(-100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+#geocode-form input, #geocode-form button {
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Add a smooth transition effect */
-}
-
-#geocode-form input:focus {
-    border-color: #4CAF50; /* Change border color on focus */
-    box-shadow: 0 0 5px #4CAF50; /* Add a glow effect */
+    border-radius: 5px;
 }
 
 #geocode-form button {
-    background-color: #4CAF50; /* Green background for the button */
+    background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
-    border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for hover */
-}
-
-#geocode-form button:hover {
-    background-color: #45a049; /* Darken background on hover */
-}
-
-/* Result container styling */
-#result {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
-#result:hover {
-    background-color: #f2f2f2;
+#geocode-form button:hover {
+    background-color: #45a049;
 }
 
-/* Map container styling */
+/* Result container */
+#result {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+/* Map container */
 #map-container {
-    width: 80%; /* Responsive width */
-    height: 500px; /* Fixed height */
-    border: 2px solid #ccc;
+    width: 90%;
+    height: 500px;
+    margin: 20px auto;
     border-radius: 10px;
     overflow: hidden;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow for better appearance */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transitions */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: mapFadeIn 1.5s ease; /* Map fade-in animation */
 }
 
-#map-container:hover {
-    transform: scale(1.05); /* Grow map slightly on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+@keyframes mapFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 #map {
     width: 100%;
-    height: 100%; /* Ensure the map fills the container */
+    height: 100%;
 }
