@@ -1,114 +1,108 @@
 /* design.css */
 
 body {
-    background-image: url('https://your-image-url-here.jpg');  /* Background image URL */
-    background-size: cover;  /* Cover the whole background */
-    background-position: center;  /* Center the background image */
-    font-family: sans-serif;  /* Set font family */
-    margin: 0;  /* Remove default margin */
-    padding: 20px;  /* Add padding */
-    display: flex;  /* Use flexbox for layout */
-    flex-direction: column;  /* Column direction */
-    align-items: center;  /* Center items */
+    background-image: url('pexels-solyartphotos-14825208.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px; /* Limit container width */
+    margin: auto;
+    text-align: center;
 }
 
 h1 {
-    text-align: center;  /* Center the title */
-    margin-bottom: 20px;  /* Space below the title */
+    color: white; /* Change the text color for better visibility */
+}
+
+/* Input Card */
+.input-card {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
 }
 
 /* Search Input */
-#geocode-form {
-    margin-bottom: 20px;  /* Space below the form */
-}
-
 #geocode-form label {
-    display: block;  /* Block display for label */
-    margin-bottom: 5px;  /* Space below label */
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold; /* Bold label text */
 }
 
 #geocode-form input {
-    width: 100%;  /* Full width input */
-    padding: 10px;  /* Padding inside input */
-    margin-bottom: 10px;  /* Space below input */
-    border: 1px solid #ccc;  /* Border style */
-    box-sizing: border-box;  /* Include padding in width */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;  /* Transition effects */
-}
-
-#geocode-form input:focus {
-    border-color: #4CAF50;  /* Green border on focus */
-    box-shadow: 0 0 5px #4CAF50;  /* Green shadow on focus */
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Rounded input corners */
+    box-sizing: border-box;
 }
 
 #geocode-form button {
-    background-color: #4CAF50;  /* Green background */
-    color: white;  /* White text */
-    padding: 10px 20px;  /* Padding */
-    border: none;  /* No border */
-    cursor: pointer;  /* Pointer cursor */
-    transition: background-color 0.3s ease;  /* Transition effect */
+    background-color: #4CAF50; /* Button color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px; /* Rounded button corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 #geocode-form button:hover {
-    background-color: #45a049;  /* Darker green on hover */
+    background-color: #45a049; /* Darker button color on hover */
 }
 
 /* Result Container */
 #result {
-    margin-top: 20px;  /* Space above result */
-    padding: 10px;  /* Padding inside result */
-    border: 1px solid #ccc;  /* Border style */
-    border-radius: 5px;  /* Rounded corners */
-    transition: background-color 0.3s ease;  /* Transition effect */
-}
-
-#result:hover {
-    background-color: #f2f2f2;  /* Light gray background on hover */
+    margin-top: 20px;
 }
 
 /* Description */
 #description {
-    padding: 20px;  /* Padding inside description */
-    background-color: #fff;  /* White background */
-    border: 1px solid #ccc;  /* Border style */
-    border-radius: 5px;  /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Shadow effect */
-    transition: transform 0.5s ease, opacity 0.5s ease;  /* Transition effects */
+    padding: 20px;
+    background-color: #fff; /* White background for the description */
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
 #description.hidden {
-    transform: translateY(-100%);  /* Move up when hidden */
-    opacity: 0;  /* Fully transparent */
+    transform: translateY(-100%);
+    opacity: 0;
 }
 
 #description.show {
-    transform: translateY(0);  /* Move to original position when shown */
-    opacity: 1;  /* Fully opaque */
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .description-content {
-    font-size: 18px;  /* Font size */
-    line-height: 1.5;  /* Line height */
-    color: #333;  /* Dark gray text color */
+    font-size: 18px;
+    line-height: 1.5;
+    color: #333;
 }
 
 .description-content strong {
-    font-weight: bold;  /* Bold text */
-    color: #4CAF50;  /* Green text color */
+    font-weight: bold;
+    color: #4CAF50;
 }
 
 /* Map Container */
 #map-container {
-    width: 800px;  /* Width of the map */
-    height: 400px;  /* Height of the map */
-    border: 1px solid #ccc;  /* Border style */
-    border-radius: 5px;  /* Rounded corners */
-    overflow: hidden;  /* Hide overflow */
-    margin-top: 20px;  /* Space above map */
+    width: 100%; /* Full width for responsiveness */
+    height: 500px; /* Fixed height for the map */
+    border-radius: 5px; /* Rounded corners */
+    overflow: hidden;
+    margin-top: 20px;
 }
 
 #map {
-    width: 100%;  /* Full width map */
-    height: 100%;  /* Full height map */
+    width: 100%;
+    height: 100%;
 }

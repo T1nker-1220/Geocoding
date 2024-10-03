@@ -3,32 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Philippine City Information</title>
+    <title>Reverse Geocoding</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}"> 
 </head>
 <body>
-    <h1>Find Philippine City Information</h1>
-
-    <form id="geocode-form" method="POST">
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" placeholder="Enter Philippine City" required>
-        <button type="submit">Search</button>
-    </form>
-
-    <div id="result">
-        <div id="description" class="hidden">
-            <div class="description-content">
-                <strong>City Name:</strong> <span id="city-name"></span><br>
-                <strong>Description:</strong> <span id="city-description"></span>
-            </div>
+    <div class="container">
+        <h1>Find Philippine City Information</h1>
+        
+        <div class="input-card">
+            <form id="geocode-form" method="POST">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" placeholder="Enter Philippine City" required>
+                <button type="submit">Search</button>
+            </form>
         </div>
-        <div id="map-container">
-            <div id="map"></div>  <!-- Map container -->
+
+        <div id="result">
+            <div id="description" class="hidden">
+                <div class="description-content">
+                    <strong>City Name:</strong> <span id="city-name"></span>
+                    <br>
+                    <strong>Description:</strong> <span id="city-description"></span>
+                </div>
+            </div>
+            <div id="map-container">
+                <div id="map"></div>
+            </div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='leaflet.js') }}"></script>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>  <!-- Corrected the script filename -->
+    <script src="{{ url_for('static', filename='leaflet.js') }}"></script> 
+    <script src="{{ url_for('static', filename='script.js') }}"></script> 
 </body>
 </html>
