@@ -1,3 +1,4 @@
+const descriptionContainer = document.getElementById('description');
 const geocodeForm = document.getElementById('geocode-form');
 const resultDiv = document.getElementById('result');
 const mapContainer = document.getElementById('map-container');
@@ -7,8 +8,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-geocodeForm.addEventListener('submit', (event) => {
-    event.preventDefault(); // Prevent default form submission
+geocodeForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const locationInput = document.getElementById('location-input');
 
     const city = document.getElementById('city').value;
 

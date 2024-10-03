@@ -18,11 +18,16 @@
     </form>
 
     <div id="result">
-        <!-- Reverse geocoded address will be displayed here -->
-    </div>
-
-    <div id="map-container">
-        <div id="map"></div>
+        <div id="description" class="hidden">
+            <div class="description-content">
+                <strong>City Name:</strong> <span id="city-name"></span>
+                <br>
+                <strong>Description:</strong> <span id="city-description"></span>
+            </div>
+        </div>
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
     </div>
 
     <script src="{{ url_for('static', filename='leaflet.js') }}"></script> 

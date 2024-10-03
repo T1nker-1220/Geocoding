@@ -1,4 +1,5 @@
 /* design.css */
+
 body {
     background-image: url('pexels-solyartphotos-14825208.jpg');
     background-size: cover;
@@ -59,6 +60,50 @@ h1 {
 
 #result:hover {
     background-color: #f2f2f2;
+}
+
+/* Description */
+#description {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+#description.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+#description.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#description.show .description-content {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.description-content {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.description-content strong {
+    font-weight: bold;
+    color: #4CAF50;
 }
 
 /* Map Container */
