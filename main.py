@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-# Your OpenCage API key
+# OpenCage API key
 api_key = "498177dbd9e64c509f3c883626ee4629"
 
 @app.route('/', methods=['GET', 'POST'])
