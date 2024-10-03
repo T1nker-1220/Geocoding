@@ -1,79 +1,74 @@
-// Get DOM elements from the HTML
-const descriptionContainer = document.getElementById('description'); // Container for city description
-const geocodeForm = document.getElementById('geocode-form'); // The form for city input
-const resultDiv = document.getElementById('result'); // Div to display results
-const mapContainer = document.getElementById('map-container'); // Container for the map
+// Get references to HTML elements for interaction
+const descriptionContainer = document.getElementById('description');
+const cityNameSpan = document.getElementById('city-name');
+const cityDescriptionSpan = document.getElementById('city-description');
+const geocodeForm = document.getElementById('geocode-form');
+const resultDiv = document.getElementById('result');
 
-// Initialize the Leaflet map centered on the Philippines
-const map = L.map('map').setView([12.8797, 121.7740], 6); // Default view and zoom level
+// Initialize Leaflet map centered on the Philippines with zoom level 6
+const map = L.map('map').setView([12.8797, 121.7740], 6);
 
-// Add OpenStreetMap tile layer to the map
+// Add OpenStreetMap tiles to the map
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map); // This adds the tiles to the map
+}).addTo(map);
 
-// Listen for the form submission event
+// Initialize a marker variable to store the marker and ensure it can be removed later
+let marker;
+
+// Event listener for form submission
 geocodeForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    const city = document.getElementById('city').value.trim(); // Get the value of the input field and trim whitespace
+    e.preventDefault(); // Prevent the form from submitting the usual way
+    const city = document.getElementById('city').value; // Get city input value
 
-    // Check if the input is empty and display a message if so
-    if (!city) {
-        resultDiv.innerHTML = '<p>Please enter a valid city name.</p>'; // Inform the user to input a city
-        return; // Exit the function
-    }
-
-    // Fetch geocoding data from the Flask backend
+    // Send the city to the server using fetch
     fetch('/', {
-        method: 'POST', // Use POST method
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded' // Specify the content type
+            'Content-Type': 'application/x-www-form-urlencoded' // Send the form data as URL encoded
         },
-        body: `city=${encodeURIComponent(city)}` // Encode the city name to safely include it in the request
+        body: `city=${city}` // Send the city name in the body of the POST request
     })
     .then(response => {
-        if (response.ok) { // Check if the response is OK (status code 200)
-            return response.json(); // Parse JSON response
+        if (response.ok) {
+            return response.json(); // Parse the response as JSON if the request was successful
         } else {
-            throw new Error('Network response was not ok'); // Throw an error for bad responses
+            throw new Error('Network response was not ok');
         }
     })
     .then(data => {
-        // Clear previous results from the display
-        resultDiv.innerHTML = ''; 
+        resultDiv.innerHTML = ''; // Clear previous results
 
-        // Check for errors in the API response
         if (data.error) {
-            resultDiv.innerHTML = `<p>${data.error}</p>`; // Display error message
+            resultDiv.innerHTML = `<p>${data.error}</p>`; // Display error message if something went wrong
         } else {
-            // Display the geocoding results in a structured format
             resultDiv.innerHTML = `
-                <div class="result-card">
-                    <h2>Geocoding Result</h2>
-                    <p><strong>City:</strong> ${data.formatted}</p>
-                    <p><strong>Latitude:</strong> ${data.latitude}</p>
-                    <p><strong>Longitude:</strong> ${data.longitude}</p>
-                    <p><strong>Confidence:</strong> ${data.confidence}</p>
-                </div>
+                <p>Formatted Address: ${data.formatted}</p>
+                <p>Latitude: ${data.latitude}</p>
+                <p>Longitude: ${data.longitude}</p>
+                <p>Components: ${JSON.stringify(data.components)}</p>
+                <p>Confidence: ${data.confidence}</p>
             `;
 
-            // Animate the result div to fade in
-            resultDiv.classList.add('visible'); 
+            // Update the city name and description placeholders
+            cityNameSpan.innerText = data.components.city || data.components.town || city; // Show city or fallback
+            cityDescriptionSpan.innerText = data.formatted;
 
-            // Animate the map to the new location using flyTo
-            map.flyTo([data.latitude, data.longitude], 12, {
-                duration: 2 // Duration of the animation in seconds
-            });
+            // Update the map's center to the new location
+            map.setView([data.latitude, data.longitude], 12);
 
-            // Add a marker to the map at the city location
-            L.marker([data.latitude, data.longitude]).addTo(map)
-                .bindPopup(`City: ${data.formatted}`) // Bind a popup to the marker
-                .openPopup(); // Open the popup immediately
+            // Remove existing marker if present
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            // Add a new marker at the city's coordinates
+            marker = L.marker([data.latitude, data.longitude]).addTo(map)
+                .bindPopup(`<b>${data.formatted}</b>`).openPopup(); // Show popup on the marker
         }
     })
     .catch(error => {
-        // Catch and handle any errors that occur during fetch
         console.error('There was a problem with the fetch operation:', error);
-        resultDiv.innerHTML = `<p>Error: Unable to process request. ${error.message}</p>`; // Display the error message
+        resultDiv.innerHTML = `<p>Error: Unable to process request.</p>`; // Display error on the page
     });
 });
