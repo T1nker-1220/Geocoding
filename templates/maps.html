@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reverse Geocoding</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}" /> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}" />
 </head>
 <body>
     <h1>Reverse Geocode Philippine Cities</h1>
@@ -13,7 +13,6 @@
     <form id="geocode-form" method="POST">
         <label for="city">City:</label>
         <input type="text" id="city" name="city" placeholder="Enter Philippine City" required>
-
         <button type="submit">Search</button>
     </form>
 
@@ -30,7 +29,7 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='leaflet.js') }}"></script> 
-    <script src="{{ url_for('static', filename='input.js') }}"></script> 
+    <script src="{{ url_for('static', filename='leaflet.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
