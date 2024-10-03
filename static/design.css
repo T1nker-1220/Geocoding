@@ -1,5 +1,8 @@
 /* design.css */
 body {
+    background-image: url('pexels-solyartphotos-14825208.jpg');
+    background-size: cover;
+    background-position: center;
     font-family: sans-serif;
     margin: 20px;
     display: flex;
