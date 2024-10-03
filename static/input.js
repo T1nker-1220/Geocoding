@@ -1,13 +1,40 @@
-function initMap() {
-    const map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 40.7128, lng: -74.0060 }, // New York City
-        zoom: 10
-    });
+const geocodeForm = document.getElementById('geocode-form');
+const resultDiv = document.getElementById('result');
 
-    // Add a marker
-    const marker = new google.maps.Marker({
-        position: { lat: 40.7128, lng: -74.0060 },
-        map: map,
-        icon: '/static/images/marker.png' // Customize with your marker image
+geocodeForm.addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    const latitude = document.getElementById('latitude').value;
+    const longitude = document.getElementById('longitude').value;
+
+    fetch('/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `latitude=${latitude}&longitude=${longitude}`
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Network response was not ok');
+        }
+    })
+    .then(data => {
+        resultDiv.innerHTML = ''; // Clear previous results
+        if (data.error) {
+            resultDiv.innerHTML = `<p>${data.error}</p>`;
+        } else {
+            resultDiv.innerHTML = `
+                <p>Formatted Address: ${data.formatted}</p>
+                <p>Components: ${JSON.stringify(data.components)}</p>
+                <p>Confidence: ${data.confidence}</p>
+            `;
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        resultDiv.innerHTML = `<p>Error: Unable to process request.</p>`;
     });
-}
+});

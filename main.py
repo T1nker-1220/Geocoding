@@ -1,6 +1,19 @@
-# apps.py
+from flask import Flask, render_template, request, jsonify
 
-import requests
+app = Flask(__name__)
+
+# Your OpenCage API key
+api_key = "498177dbd9e64c509f3c883626ee4629" 
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        latitude = float(request.form.get('latitude'))
+        longitude = float(request.form.get('longitude'))
+        result = reverse_geocode(latitude, longitude, api_key)
+        return jsonify(result)
+    else:
+        return render_template('maps.html')
 
 def reverse_geocode(latitude, longitude, api_key):
     """Reverse geocodes coordinates using the OpenCage API."""
@@ -22,10 +35,5 @@ def reverse_geocode(latitude, longitude, api_key):
     else:
         return {'error': 'API request failed'}
 
-# Example usage:
-api_key = 'YOUR_API_KEY'
-latitude = 51.5074
-longitude = 0.1278
-
-result = reverse_geocode(latitude, longitude, api_key)
-print(result) 
+if __name__ == '__main__':
+    app.run(debug=True)

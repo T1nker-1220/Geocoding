@@ -1,9 +1,48 @@
+/* design.css */
 body {
-    margin: 0;
-    padding: 0;
     font-family: sans-serif;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#map {
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Search Input */
+#geocode-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#geocode-form input {
     width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+#geocode-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Result Container */
+#result {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#result:hover {
+    background-color: #f2f2f2;
 }
