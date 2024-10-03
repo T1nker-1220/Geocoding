@@ -1,94 +1,114 @@
-/* Body styling with background image */
+/* design.css */
+
 body {
-    background-image: url('https://example.com/image.jpg'); /* Change URL to valid one */
-    background-size: cover; /* Cover the entire page with background */
-    background-position: center; /* Center the background */
-    font-family: sans-serif;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-image: url('https://your-image-url-here.jpg');  /* Background image URL */
+    background-size: cover;  /* Cover the whole background */
+    background-position: center;  /* Center the background image */
+    font-family: sans-serif;  /* Set font family */
+    margin: 0;  /* Remove default margin */
+    padding: 20px;  /* Add padding */
+    display: flex;  /* Use flexbox for layout */
+    flex-direction: column;  /* Column direction */
+    align-items: center;  /* Center items */
 }
 
-/* Title styling */
 h1 {
-    font-size: 2.5em;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-    animation: fadeInTitle 1.5s ease; /* Title animation */
+    text-align: center;  /* Center the title */
+    margin-bottom: 20px;  /* Space below the title */
 }
 
-@keyframes fadeInTitle {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Input form styling */
+/* Search Input */
 #geocode-form {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    max-width: 500px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation: formSlide 1s ease; /* Slide in animation */
+    margin-bottom: 20px;  /* Space below the form */
 }
 
-@keyframes formSlide {
-    from { opacity: 0; transform: translateX(-100%); }
-    to { opacity: 1; transform: translateX(0); }
+#geocode-form label {
+    display: block;  /* Block display for label */
+    margin-bottom: 5px;  /* Space below label */
 }
 
-#geocode-form input, #geocode-form button {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+#geocode-form input {
+    width: 100%;  /* Full width input */
+    padding: 10px;  /* Padding inside input */
+    margin-bottom: 10px;  /* Space below input */
+    border: 1px solid #ccc;  /* Border style */
+    box-sizing: border-box;  /* Include padding in width */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;  /* Transition effects */
+}
+
+#geocode-form input:focus {
+    border-color: #4CAF50;  /* Green border on focus */
+    box-shadow: 0 0 5px #4CAF50;  /* Green shadow on focus */
 }
 
 #geocode-form button {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: #4CAF50;  /* Green background */
+    color: white;  /* White text */
+    padding: 10px 20px;  /* Padding */
+    border: none;  /* No border */
+    cursor: pointer;  /* Pointer cursor */
+    transition: background-color 0.3s ease;  /* Transition effect */
 }
 
 #geocode-form button:hover {
-    background-color: #45a049;
+    background-color: #45a049;  /* Darker green on hover */
 }
 
-/* Result container */
+/* Result Container */
 #result {
-    margin-top: 20px;
-    width: 100%;
-    max-width: 600px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
+    margin-top: 20px;  /* Space above result */
+    padding: 10px;  /* Padding inside result */
+    border: 1px solid #ccc;  /* Border style */
+    border-radius: 5px;  /* Rounded corners */
+    transition: background-color 0.3s ease;  /* Transition effect */
 }
 
-/* Map container */
+#result:hover {
+    background-color: #f2f2f2;  /* Light gray background on hover */
+}
+
+/* Description */
+#description {
+    padding: 20px;  /* Padding inside description */
+    background-color: #fff;  /* White background */
+    border: 1px solid #ccc;  /* Border style */
+    border-radius: 5px;  /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Shadow effect */
+    transition: transform 0.5s ease, opacity 0.5s ease;  /* Transition effects */
+}
+
+#description.hidden {
+    transform: translateY(-100%);  /* Move up when hidden */
+    opacity: 0;  /* Fully transparent */
+}
+
+#description.show {
+    transform: translateY(0);  /* Move to original position when shown */
+    opacity: 1;  /* Fully opaque */
+}
+
+.description-content {
+    font-size: 18px;  /* Font size */
+    line-height: 1.5;  /* Line height */
+    color: #333;  /* Dark gray text color */
+}
+
+.description-content strong {
+    font-weight: bold;  /* Bold text */
+    color: #4CAF50;  /* Green text color */
+}
+
+/* Map Container */
 #map-container {
-    width: 90%;
-    height: 500px;
-    margin: 20px auto;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation: mapFadeIn 1.5s ease; /* Map fade-in animation */
-}
-
-@keyframes mapFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    width: 800px;  /* Width of the map */
+    height: 400px;  /* Height of the map */
+    border: 1px solid #ccc;  /* Border style */
+    border-radius: 5px;  /* Rounded corners */
+    overflow: hidden;  /* Hide overflow */
+    margin-top: 20px;  /* Space above map */
 }
 
 #map {
-    width: 100%;
-    height: 100%;
+    width: 100%;  /* Full width map */
+    height: 100%;  /* Full height map */
 }

@@ -1,56 +1,57 @@
-// Get references to HTML elements
 const descriptionContainer = document.getElementById('description');
-const cityNameSpan = document.getElementById('city-name');
-const cityDescriptionSpan = document.getElementById('city-description');
 const geocodeForm = document.getElementById('geocode-form');
 const resultDiv = document.getElementById('result');
+const mapContainer = document.getElementById('map-container');
 
-// Initialize Leaflet map centered on the Philippines
+// Initialize the map with a default view
 const map = L.map('map').setView([12.8797, 121.7740], 6);
 
-// Add OpenStreetMap tiles to the map
+// Set up the tile layer for the map
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-// Variable to store the map marker
-let marker;
-
-// Handle form submission
+// Handle the form submission
 geocodeForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();  // Prevent the default form submission
+    const city = document.getElementById('city').value;  // Get the city input
 
-    const city = document.getElementById('city').value; // Get the city from the input field
-
-    // Fetch the geocode data from the server
+    // Send a POST request to the server
     fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `city=${city}`
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'  // Set content type
+        },
+        body: `city=${city}`  // Include city in the request body
     })
-    .then(response => response.json())
-    .then(data => {
-        resultDiv.innerHTML = ''; // Clear previous results
-
-        if (data.error) {
-            resultDiv.innerHTML = `<p>${data.error}</p>`; // Display error message
+    .then(response => {
+        if (response.ok) {
+            return response.json();  // Parse the JSON response
         } else {
-            cityNameSpan.innerText = data.components.city || data.components.town || city; // Display city name
-            cityDescriptionSpan.innerText = data.formatted; // Display formatted address
+            throw new Error('Network response was not ok');  // Handle errors
+        }
+    })
+    .then(data => {
+        resultDiv.innerHTML = '';  // Clear previous results
 
-            // Update map view to the new city location
-            map.setView([data.latitude, data.longitude], 12);
+        // Check for errors in the response
+        if (data.error) {
+            resultDiv.innerHTML = `<p>${data.error}</p>`;  // Display error message
+        } else {
+            // Display the city information
+            document.getElementById('city-name').textContent = data.formatted;  // Set city name
+            document.getElementById('city-description').textContent = `Latitude: ${data.latitude}, Longitude: ${data.longitude}`;  // Set city description
 
-            // Remove existing marker if present
-            if (marker) map.removeLayer(marker);
+            // Show the description container
+            descriptionContainer.classList.remove('hidden');
+            descriptionContainer.classList.add('show');
 
-            // Add a new marker to the map at the city's coordinates
-            marker = L.marker([data.latitude, data.longitude]).addTo(map)
-                .bindPopup(`<b>${data.formatted}</b>`).openPopup(); // Bind a popup to the marker
+            // Center the map on the searched city
+            map.setView([data.latitude, data.longitude], 12);  // Adjust zoom as needed
         }
     })
     .catch(error => {
-        console.error('Error:', error);
-        resultDiv.innerHTML = `<p>Error: Unable to process request.</p>`; // Display error message
+        console.error('There was a problem with the fetch operation:', error);  // Log error
+        resultDiv.innerHTML = `<p>Error: Unable to process request.</p>`;  // Display error message
     });
 });

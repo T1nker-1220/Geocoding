@@ -1,44 +1,43 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 
-app = Flask(__name__, static_folder='static')  # Flask app initialized, static folder defined
+app = Flask(__name__, static_folder='static')  # Set the static folder
 
-# OpenCage API key for geocoding
+# Your OpenCage API key
 api_key = "498177dbd9e64c509f3c883626ee4629"
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    """Handles both GET and POST requests for the root URL."""
     if request.method == 'POST':
-        city = request.form.get('city')  # Get the city from the form data
+        city = request.form.get('city')  # Get the city input from the form
         if city:
-            result = geocode_city(city, api_key)  # Perform geocoding using the OpenCage API
+            result = geocode_city(city, api_key)  # Call the function to geocode the city
             return jsonify(result)  # Return the result as JSON
         else:
-            return jsonify({'error': 'Please enter a city'}), 400  # Error if no city provided
+            return jsonify({'error': 'Please enter a city'}), 400  # Error response if no city is entered
     else:
-        return render_template('maps.html')  # Render the main HTML page
+        return render_template('maps.html')  # Render the main HTML template for GET requests
 
 def geocode_city(city, api_key):
     """Geocodes a city name using the OpenCage API."""
     url = f"https://api.opencagedata.com/geocode/v1/json?q={city},Philippines&key={api_key}&pretty=1"
-    response = requests.get(url)  # API call to OpenCage
+    response = requests.get(url)
 
-    if response.status_code == 200:  # If the request is successful
+    if response.status_code == 200:
         data = response.json()
-        if 'results' in data and data['results']:  # Check if results were returned
+        if 'results' in data and data['results']:
             result = data['results'][0]  # Get the first result
             return {
-                'latitude': result['geometry']['lat'],  # Extract latitude
-                'longitude': result['geometry']['lng'],  # Extract longitude
-                'formatted': result['formatted'],  # Extract formatted address
-                'components': result['components'],  # Extract address components
-                'confidence': result['confidence']  # Extract confidence level
+                'latitude': result['geometry']['lat'],
+                'longitude': result['geometry']['lng'],
+                'formatted': result['formatted'],
+                'components': result['components'],
+                'confidence': result['confidence']
             }
         else:
-            return {'error': 'City not found'}  # If no results, return error
+            return {'error': 'City not found'}  # Error if the city is not found
     else:
-        return {'error': 'API request failed'}  # Handle API request failure
+        return {'error': 'API request failed'}  # Error if the API request fails
 
 if __name__ == '__main__':
-    app.run(debug=True)  # Run Flask app in debug mode
+    app.run(debug=True)  # Run the application in debug mode
