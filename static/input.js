@@ -4,15 +4,14 @@ const resultDiv = document.getElementById('result');
 geocodeForm.addEventListener('submit', (event) => {
     event.preventDefault(); // Prevent default form submission
 
-    const latitude = document.getElementById('latitude').value;
-    const longitude = document.getElementById('longitude').value;
+    const city = document.getElementById('city').value;
 
     fetch('/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `latitude=${latitude}&longitude=${longitude}`
+        body: `city=${city}`
     })
     .then(response => {
         if (response.ok) {
@@ -28,6 +27,8 @@ geocodeForm.addEventListener('submit', (event) => {
         } else {
             resultDiv.innerHTML = `
                 <p>Formatted Address: ${data.formatted}</p>
+                <p>Latitude: ${data.latitude}</p>
+                <p>Longitude: ${data.longitude}</p>
                 <p>Components: ${JSON.stringify(data.components)}</p>
                 <p>Confidence: ${data.confidence}</p>
             `;

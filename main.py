@@ -4,22 +4,24 @@ import requests
 app = Flask(__name__)
 
 # Your OpenCage API key
-api_key = "498177dbd9e64c509f3c883626ee4629" 
+api_key = "498177dbd9e64c509f3c883626ee4629"
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        latitude = float(request.form.get('latitude'))
-        longitude = float(request.form.get('longitude'))
-        result = reverse_geocode(latitude, longitude, api_key)
-        return jsonify(result)
+        city = request.form.get('city')
+        if city:
+            result = geocode_city(city, api_key)
+            return jsonify(result)
+        else:
+            return jsonify({'error': 'Please enter a city'}), 400
     else:
         return render_template('maps.html')
 
-def reverse_geocode(latitude, longitude, api_key):
-    """Reverse geocodes coordinates using the OpenCage API."""
+def geocode_city(city, api_key):
+    """Geocodes a city name using the OpenCage API."""
 
-    url = f"https://api.opencagedata.com/geocode/v1/json?q={latitude},{longitude}&key={api_key}&pretty=1"
+    url = f"https://api.opencagedata.com/geocode/v1/json?q={city},Philippines&key={api_key}&pretty=1"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -27,12 +29,14 @@ def reverse_geocode(latitude, longitude, api_key):
         if 'results' in data and data['results']:
             result = data['results'][0]
             return {
+                'latitude': result['geometry']['lat'],
+                'longitude': result['geometry']['lng'],
                 'formatted': result['formatted'],
                 'components': result['components'],
                 'confidence': result['confidence']
             }
         else:
-            return {'error': 'No results found'}
+            return {'error': 'City not found'}
     else:
         return {'error': 'API request failed'}
 

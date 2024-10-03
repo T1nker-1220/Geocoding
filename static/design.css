@@ -24,6 +24,12 @@ h1 {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#geocode-form input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px #4CAF50;
 }
 
 #geocode-form button {
@@ -32,6 +38,11 @@ h1 {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#geocode-form button:hover {
+    background-color: #45a049;
 }
 
 /* Result Container */
